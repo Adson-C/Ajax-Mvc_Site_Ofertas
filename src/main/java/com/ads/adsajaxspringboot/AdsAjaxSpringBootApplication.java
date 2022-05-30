@@ -22,11 +22,9 @@ public class AdsAjaxSpringBootApplication  implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-		SocialMetaTag og = service.getOpenGraphByUrl("https://www.pichau.com.br/monitor-gamer-mancer-valak-23-6-pol-va-curvo-fhd-1ms-180hz-freesync-e-g-sync-hdmi-dp-mcr-vlk24-bl01");
-		System.out.println(og.toString());
+		SocialMetaTag tag = service.getSocialMetaTagByUrl("https://www.boticario.com.br/");
+		System.out.println(tag.toString());
 
-		SocialMetaTag twitter = service.getTwitterCardByUrl("https://www.pichau.com.br/");
-		System.out.println(twitter.toString());
 
 		
 	}
