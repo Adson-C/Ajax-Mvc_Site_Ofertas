@@ -9,6 +9,13 @@ $("#linkPromocao").on('change', function() {
 			method:"POST",
 			url:"/meta/info?url=" + url,
 			cache:false,
+			beforeSend: function() {
+				$("#alert").removeClass("alert alert-danger").text('');
+				$("#titulo").val("");
+				$("#site").text("");
+				$("#linkImagem").attr("src", "/images/promo.png");
+				
+			},
 			success: function( data ) {
 				console.log(data);
 				$("#titulo").val(data.title);
