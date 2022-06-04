@@ -13,7 +13,8 @@ $("#linkPromocao").on('change', function() {
 				$("#alert").removeClass("alert alert-danger").text('');
 				$("#titulo").val("");
 				$("#site").text("");
-				$("#linkImagem").attr("src", "/images/promo.png");
+				$("#linkImagem").attr("src", "");
+				$("#loader-img").addClass("loader");
 				
 			},
 			success: function( data ) {
@@ -25,12 +26,16 @@ $("#linkPromocao").on('change', function() {
 			statusCode: {
 				404: function() {
 					$("#alert").addClass("alert alert-danger").text("Nenhuma informação pode ser recuperada dessa  url...!")
+					$("#linkImagem").attr("src", "/images/promo.png");
 				}
 			},
 			error: function() {
 				$("#alert").addClass("alert alert-danger").text("Ops ... algo deu errado , tente mais tarde !")
+				$("#linkImagem").attr("src", "/images/promo.png");
+			},
+			complete: function() {
+				$("#loader-img").removeClass("loader");
 			}
-			
 		});
 		
 	}
