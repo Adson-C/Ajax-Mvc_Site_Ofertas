@@ -8,7 +8,8 @@ public class HomerController {
 	
 	@GetMapping("/")
 	public String init() {
-		return "promo-add"; // a class raiz da aplicação
+		return "redirect:/promocao/add"; // a class raiz da aplicação
 	}
 
 }
+
