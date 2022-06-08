@@ -9,12 +9,12 @@ $("#form-add-promo").submit(function(evt) {
     promo.preco = $("#preco").val();
     promo.titulo = $("#titulo").val();
     promo.categoria = $("#categoria").val();
-    promo.linkImage = $("#linkImagem").attr("src");
+    promo.linkImagem = $("#linkImagem").attr("src");
     promo.site = $("#site").text();
 
     console.log('promo >', promo);
 
-    $ajax({
+    $.ajax({
         method: "POST",
         url: "/promocao/save",
         data: promo,
@@ -25,7 +25,7 @@ $("#form-add-promo").submit(function(evt) {
             console.log("> error: ", xhr.responseText);
             $("#alert").addClass("alert alert-danger").text("Não foi possivél salvar essa promoção.");
         }
-    })
+    });
 });
 
 
