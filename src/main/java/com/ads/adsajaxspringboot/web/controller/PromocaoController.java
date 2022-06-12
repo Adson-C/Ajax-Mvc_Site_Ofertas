@@ -33,6 +33,13 @@ public class PromocaoController {
     @Autowired
     private CategoriaRepository categoriaRepository;
 
+    // ==================================AUTOCOMPLETE ========================================
+    @GetMapping("/site")
+    public ResponseEntity<?> autocompleteByTermo(@RequestParam("termo") String termo) {
+        List<String> sites = promocaoRepository.findSiteByTermo(termo);
+        return ResponseEntity.ok(sites);
+    }
+
     // ==================================ADD LIKES ===========================================
 
     @PostMapping("/like/{id}")

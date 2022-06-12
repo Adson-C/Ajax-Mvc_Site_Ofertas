@@ -61,8 +61,9 @@ function loadByScrollBar(pageNumber) {
             data: {
                 termo: request.term
             },
-            success: function(result);
+            success: function(result){
                 response(result);
+            }
        });
     }
  });
