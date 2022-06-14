@@ -1,5 +1,7 @@
 package com.ads.adsajaxspringboot.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ads.adsajaxspringboot.domain.Promocao;
@@ -11,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface PromocaoRepository extends JpaRepository<Promocao, Long> {
+
+    @Query("select p from Promocao p where p.site like :site")
+    Page<Promocao> findBySite(@Param("site") String site, Pageable pageable);
 
     @Query("select distinct p.site from Promocao p where p.site like %:site%")
     List<String> findSiteByTermo(@Param("site") String site);

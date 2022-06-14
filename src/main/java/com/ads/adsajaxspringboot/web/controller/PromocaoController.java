@@ -40,6 +40,14 @@ public class PromocaoController {
         return ResponseEntity.ok(sites);
     }
 
+    @GetMapping("/site/list")
+    public String lisarPorSite(@RequestParam("site") String site, ModelMap model) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "dtCadastro");
+        PageRequest pageRequest = PageRequest.of(0, 8, sort);
+        model.addAttribute("promocoes", promocaoRepository.findBySite(site, pageRequest));
+        return "promo-card";
+    }
+
     // ==================================ADD LIKES ===========================================
 
     @PostMapping("/like/{id}")
