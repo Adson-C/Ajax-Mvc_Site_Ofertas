@@ -1,5 +1,7 @@
 package com.ads.adsajaxspringboot.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -15,7 +17,8 @@ public class Categoria implements Serializable {
 	
 	@Column(name = "titulo", nullable = false, unique = true)
 	private String titulo;
-	
+
+	@JsonIgnore
 	@OneToMany(mappedBy = "categoria")
 	private List<Promocao> promocoes;
 

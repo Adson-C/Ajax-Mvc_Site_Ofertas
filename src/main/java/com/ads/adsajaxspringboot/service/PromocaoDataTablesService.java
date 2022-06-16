@@ -1,6 +1,8 @@
 package com.ads.adsajaxspringboot.service;
 
+import com.ads.adsajaxspringboot.domain.Promocao;
 import com.ads.adsajaxspringboot.repository.PromocaoRepository;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -20,23 +22,30 @@ public class PromocaoDataTablesService {
     public Map<String, Object> execute(PromocaoRepository repository, HttpServletRequest request) {
 
         int start = Integer.parseInt(request.getParameter("start"));
-        int length = Integer.parseInt(request.getParameter("length"));
+        int lenght = Integer.parseInt(request.getParameter("length"));
         int draw = Integer.parseInt(request.getParameter("draw"));
 
-        int current = currentPage(start, length);
+        int current = currentPage(start, lenght);
 
         String column = columnName(request);
         Sort.Direction direction = orderBy(request);
 
-        Pageable pageable = PageRequest.of(current, length, direction, column);
+        Pageable pageable = PageRequest.of(current, lenght, direction, column);
+
+        Page<Promocao> page = queryBy(repository, pageable);
 
         Map<String, Object> json = new LinkedHashMap<>();
-        json.put("draw", null);
-        json.put("recordsTotal", 0);
-        json.put("recordsFiltered", 0);
-        json.put("data", null);
+        json.put("draw", draw);
+        json.put("recordsTotal", page.getTotalElements());
+        json.put("recordsFiltered", page.getTotalElements());
+        json.put("data", page.getContent());
 
         return json;
+    }
+
+    private Page<Promocao> queryBy(PromocaoRepository repository, Pageable pageable) {
+
+        return repository.findAll(pageable);
     }
 
     private Sort.Direction orderBy(HttpServletRequest request) {
@@ -54,11 +63,11 @@ public class PromocaoDataTablesService {
         return cols[iCol];
     }
 
-    private int currentPage(int start, int length) {
+    private int currentPage(int start, int lenght) {
         // 0          1            2
         // 0-9  | 10-19 | 20-29
 
 
-        return start / length;
+        return start / lenght;
     }
 }
