@@ -4,7 +4,7 @@ $(document).ready(function () {
         processing: true,
         serverSide: true,
         responsive: true,
-        lengthMenu: [10, 15, 20, 25],
+        lengthMenu: [ 10, 15, 20, 25],
         ajax: {
             url: "/promocao/datatables/server",
             data: "data"
