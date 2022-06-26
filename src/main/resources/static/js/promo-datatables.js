@@ -64,16 +64,29 @@ $(document).ready(function () {
             table.buttons().enable();
         }
     });
-
+// acão do botão editar
     $("#btn-editar").on('click', function() {
-        var id = table.row(table.$('tr.selected')).data().id;
-        alert('click no botão editar: ' + id);
+        if (isSelectedRow() ) {
+            $("#modal-form").modal('show');
+        }
     });
 
-
+// acão do botão excluir
     $("#btn-excluir").on('click', function() {
-        alert('click no botão excluir');
+        if(isSelectedRow) {
+        $("#modal-delete").modal('show');
+        }
     });
+// função para recuperar ID
+    function getPromoId() {
+        return table.row(table.$('tr.selected')).data().id;
+    }
+// função selecionar um linha
+    function isSelectedRow() {
+        var trow = table.row(table.$('tr.selected'));
+        return trow.data() !== undefined;
+    }
+
 
 
 });
