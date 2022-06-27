@@ -53,6 +53,12 @@ public class PromocaoController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/edit/{id}")
+    public ResponseEntity<?> preEditarPromocao(@PathVariable("id") Long id) {
+        Promocao promo =  promocaoRepository.findById(id).get();
+        return ResponseEntity.ok(promo);
+    }
+
     // ==================================AUTOCOMPLETE ========================================
     @GetMapping("/site")
     public ResponseEntity<?> autocompleteByTermo(@RequestParam("termo") String termo) {
