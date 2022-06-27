@@ -2,6 +2,7 @@ package com.ads.adsajaxspringboot.web.controller;
 
 import com.ads.adsajaxspringboot.domain.Categoria;
 import com.ads.adsajaxspringboot.domain.Promocao;
+import com.ads.adsajaxspringboot.dto.PromocaoDTO;
 import com.ads.adsajaxspringboot.repository.CategoriaRepository;
 import com.ads.adsajaxspringboot.repository.PromocaoRepository;
 import com.ads.adsajaxspringboot.service.PromocaoDataTablesService;
@@ -57,6 +58,28 @@ public class PromocaoController {
     public ResponseEntity<?> preEditarPromocao(@PathVariable("id") Long id) {
         Promocao promo =  promocaoRepository.findById(id).get();
         return ResponseEntity.ok(promo);
+    }
+
+    @PostMapping("/edit")
+    public  ResponseEntity<?> editarPromocao(@Valid PromocaoDTO dto, BindingResult result) {
+
+        if (result.hasErrors()) {
+            Map<String, String> errors = new HashMap<>();
+            for (FieldError error : result.getFieldErrors()) {
+                errors.put(error.getField(), error.getDefaultMessage());
+                }
+                return ResponseEntity.unprocessableEntity().body(errors);
+            }
+        Promocao promo = promocaoRepository.findById(dto.getId()).get();
+          promo.setCategoria(dto.getCategoria());
+          promo.setDescricao(dto.getDescricao());
+          promo.setLinkImagem(dto.getLinkImagem());
+          promo.setPreco(dto.getPreco());
+          promo.setTitulo(dto.getTitulo());
+
+          promocaoRepository.save(promo);
+
+        return ResponseEntity.ok().build();
     }
 
     // ==================================AUTOCOMPLETE ========================================
