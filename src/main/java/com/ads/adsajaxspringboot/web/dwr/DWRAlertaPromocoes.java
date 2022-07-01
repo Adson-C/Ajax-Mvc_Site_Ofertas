@@ -1,8 +1,7 @@
 package com.ads.adsajaxspringboot.web.dwr;
 
 import com.ads.adsajaxspringboot.repository.PromocaoRepository;
-import org.directwebremoting.WebContext;
-import org.directwebremoting.WebContextFactory;
+import org.directwebremoting.*;
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -56,9 +57,35 @@ public class DWRAlertaPromocoes {
 
         @Override
         public void run() {
+            String session = context.getScriptSession().getId();
+
+
+            Browser.withSession(context, session, new Runnable() {
+                @Override
+                public void run() {
+
+                    Map<String, Object> map =
+                            repository.totalAndUltimaPromocaoByDataCadastro(lastDate);
+
+                    count = (Long) map.get("count");
+                    lastDate = map.get("lastDate") == null
+                            ? lastDate
+                            : (LocalDateTime) map.get("lastDate");
+
+                    Calendar time = Calendar.getInstance();
+                    time.setTimeInMillis(context.getScriptSession().getLastAccessedTime());
+                    System.out.println("count: " + count
+                    + ", lastDate: " + lastDate
+                    + " <" + session + "> " + " <" + time.getTime());
+
+                    if (count > 0) {
+                        ScriptSessions.addFunctionCall("showButton", count);
+                    }
+
+                }
+            });
 
         }
     }
-
 
 }
