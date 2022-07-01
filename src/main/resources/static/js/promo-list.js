@@ -114,3 +114,28 @@ $(document).on("click", "button[id*='likes-btn-']" ,function() {
              }
        });
 });
+// AJAX REVERSE
+var totalOferta= 0; // variavél global
+// função init canal que será aberto entre cliente e servidor
+function init() {
+    console.log("dwr init...");
+
+    dwr.engine.setActiveReverseAjax(true);
+    dwr.engine.setErrorHandler(error);
+
+    DWRAlertaPromocoes.init();
+
+}
+
+function error(excpetion) {
+    console.log("dwr error: ", excpetion);
+}
+
+function showButton(count) {
+    totalOferta = totalOferta + count;
+    $("#btn-alert").show(function() {
+        $(this)
+        .attr("style", "display: block;")
+        .text("Veja " + totalOferta + " nova(s) oferta(s)!");
+    });
+}
