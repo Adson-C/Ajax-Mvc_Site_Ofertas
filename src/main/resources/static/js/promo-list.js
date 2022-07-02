@@ -114,9 +114,14 @@ $(document).on("click", "button[id*='likes-btn-']" ,function() {
              }
        });
 });
+
 // AJAX REVERSE
 var totalOferta= 0; // variavél global
 // função init canal que será aberto entre cliente e servidor
+
+$(document).ready(function() {
+    init();
+});
 function init() {
     console.log("dwr init...");
 
